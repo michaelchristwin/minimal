@@ -1,15 +1,48 @@
 @import "tailwindcss";
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+body,
+html {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  height: 100vh;
+  background-color: #faf9f6;
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
+/* Google Fonts */
+.caveat {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
+.playwrite-hr {
+  font-family: "Playwrite HR", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+/* Local Fonts */
+@font-face {
+  font-family: "Jello-Stone";
+  src: url("/fonts/jello-stone-font/JelloStone-YqKz8.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "june-expt-variable";
+  src: url("/fonts/june-expt-font/june-expt-variable-active-vf.woff2")
+    format("woff2");
+  font-style: normal;
+  font-display: swap;
+}
+
+.jello-stone {
+  font-family: "Jello-Stone", sans-serif;
+  font-optical-sizing: auto;
+}
+
+.june-expt-variable {
+  font-family: "june-expt-variable", sans-serif;
+  font-optical-sizing: auto;
 }
