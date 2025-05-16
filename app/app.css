@@ -6,6 +6,7 @@ html {
   font-optical-sizing: auto;
   height: 100vh;
   background-color: #faf9f6;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
@@ -46,4 +47,27 @@ html {
 .june-expt-variable {
   font-family: "june-expt-variable", sans-serif;
   font-optical-sizing: auto;
+}
+.space-mono-regular {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.space-mono-bold {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.space-mono-regular-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.space-mono-bold-italic {
+  font-family: "Space Mono", monospace;
+  font-weight: 700;
+  font-style: italic;
 }

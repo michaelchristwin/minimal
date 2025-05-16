@@ -2,13 +2,15 @@ import { lazy, useRef } from "react";
 import type { Route } from "./+types/home";
 const Hero = lazy(() => import("~/components/sections/Hero"));
 const Section2 = lazy(() => import("~/components/sections/Section2"));
-const Section3 = lazy(() => import("~/components/sections/Section3"));
-const sections = [Hero, Section2, Section3];
+const MetricsSection = lazy(
+  () => import("~/components/sections/MetricsSection")
+);
+const sections = [Hero, Section2, MetricsSection];
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Home| M3tering Protocol" },
+    { name: "description", content: "Welcome to M3tering Protocol!" },
   ];
 }
 
