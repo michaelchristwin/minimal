@@ -1,4 +1,4 @@
-import { lazy, useEffect, useRef } from "react";
+import { lazy, useRef } from "react";
 import type { Route } from "./+types/home";
 const Hero = lazy(() => import("~/components/sections/Hero"));
 const Section2 = lazy(() => import("~/components/sections/Section2"));

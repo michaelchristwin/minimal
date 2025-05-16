@@ -10,8 +10,11 @@ const Section2 = () => {
   const textContainerY = useTransform(scrollYProgress, [0, 1], ["0%", "-400%"]);
 
   return (
-    <div ref={wrapper} className={`w-full relative p-[50px] h-[500vh]`}>
-      <div className="h-screen sticky top-[20px] flex justify-between items-center overflow-hidden">
+    <div
+      ref={wrapper}
+      className={`w-full relative p-[50px] h-[500vh] bg-[#faf9f6]`}
+    >
+      <div className="h-screen sticky top-[100px] flex justify-between items-center overflow-hidden">
         <div className={`w-[48%] h-full`}>
           <picture>
             {Object.entries(ETHCity.sources).map(([type, srcset], i) => (

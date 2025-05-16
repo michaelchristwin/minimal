@@ -6,6 +6,7 @@ html {
   font-optical-sizing: auto;
   height: 100vh;
   background-color: #faf9f6;
+  scroll-behavior: smooth;
 }
 
 /* Google Fonts */

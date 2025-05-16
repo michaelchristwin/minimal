@@ -65,7 +65,7 @@ function Particles() {
       particle.style.top = `${posY}%`;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
-      particle.style.backgroundColor = "rgba(255, 255, 255, 0.5)";
+      particle.style.backgroundColor = "rgb(255, 213, 2)";
       particle.style.borderRadius = "50%";
       particle.style.opacity = `${Math.random() * 0.5 + 0.3}`;
 
@@ -116,9 +116,9 @@ const ParticleStyles = () => {
     <style>{`
    .particle {
     position: absolute;
-    width: 5px;
-    height: 5px;
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 10px;
+    height: 10px;
+    background-color: rgb(255, 213, 2);
     border-radius: 50%;
     }
         `}</style>
