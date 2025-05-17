@@ -25,11 +25,16 @@ const Hero = () => {
         className="absolute top-0 left-0 inset-0 w-full h-full"
         style={{ y }}
       >
-        <img
-          src={SolarGhibhify.img.src}
-          alt={`Solar city ghibhify`}
-          className={`transition-all duration-300 ease-in-out object-cover w-full h-full object-center`}
-        />
+        <picture>
+          {Object.entries(SolarGhibhify.sources).map(([type, srcset], i) => (
+            <source type={`image/${type}`} srcSet={srcset} key={i} />
+          ))}
+          <img
+            src={SolarGhibhify.img.src}
+            alt={`Solar city ghibhify`}
+            className={`transition-all duration-300 ease-in-out object-cover w-full h-full object-center`}
+          />
+        </picture>
       </motion.div>
       <div className="flex w-full items-center justify-between text-white absolute bottom-[30px] sm:px-[40px] px-[20px] z-10">
         <motion.div
@@ -53,6 +58,7 @@ const Hero = () => {
           </h1>
         </motion.div>
         <motion.button
+          aria-label="Scroll Down"
           whileTap={{ scale: 0.9 }}
           whileHover={{ scale: 1.1 }}
           onClick={scrollToAbout}

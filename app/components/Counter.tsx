@@ -2,7 +2,7 @@ import NumberFlow, {
   continuous,
   type NumberFlowElement,
 } from "@number-flow/react";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 
 type CounterProps = {
@@ -16,51 +16,62 @@ const MotionNumberFlow = motion.create(NumberFlow);
 function Counter({ max, prefix, duration = 4000 }: CounterProps) {
   const [value, setValue] = useState(0);
   const counter = useRef<NumberFlowElement>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const isVisible = useRef(false);
+  const animationRef = useRef<number | null>(null);
+  const isVisibleRef = useRef(false);
 
-  // Handle counting logic in a separate useEffect
-  useEffect(() => {
-    if (!isVisible.current) return;
-
-    // Reset value when visibility changes to true
-    setValue(0);
-
-    // Clear any running interval
-    if (intervalRef.current) clearInterval(intervalRef.current);
+  // Animation logic using requestAnimationFrame
+  const startAnimation = () => {
+    if (animationRef.current) cancelAnimationFrame(animationRef.current);
 
     const stepCount = 60;
     const step = Math.ceil(max / stepCount);
     const interval = duration / stepCount;
+    let startTime: number | null = null;
 
-    intervalRef.current = setInterval(() => {
-      setValue((prev) => {
-        const next = prev + step;
-        if (next >= max) {
-          if (intervalRef.current) clearInterval(intervalRef.current);
-          return max;
-        }
-        return next;
-      });
-    }, interval);
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (elapsed >= interval) {
+        setValue((prev) => {
+          const next = prev + step;
+          if (next >= max) {
+            animationRef.current = null;
+            return max;
+          }
+          startTime = timestamp; // Reset for next step
+          return next;
+        });
+      }
+
+      if (isVisibleRef.current && value < max) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
-  }, [duration, max, isVisible.current]);
 
-  // Handle intersection observer separately
-  useEffect(() => {
-    const node = counter.current;
+    animationRef.current = requestAnimationFrame(animate);
+  };
+
+  // Stop animation when not visible
+  const stopAnimation = () => {
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    setValue(0); // Reset value
+  };
+
+  // Visibility detection using ref callback
+  const handleVisibility = (node: HTMLElement | null) => {
     if (!node) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        isVisible.current = entry.isIntersecting;
-
-        if (!entry.isIntersecting && intervalRef.current) {
-          // Clear on exit to stop mid-animation
-          clearInterval(intervalRef.current);
+        isVisibleRef.current = entry.isIntersecting;
+        if (entry.isIntersecting) {
+          startAnimation();
+        } else {
+          stopAnimation();
         }
       },
       { threshold: 0.5 }
@@ -68,10 +79,10 @@ function Counter({ max, prefix, duration = 4000 }: CounterProps) {
 
     observer.observe(node);
 
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+    // Store observer for cleanup
+    counter.current = node as NumberFlowElement;
+    return () => observer.disconnect();
+  };
 
   return (
     <MotionNumberFlow
@@ -79,7 +90,7 @@ function Counter({ max, prefix, duration = 4000 }: CounterProps) {
       layoutRoot
       value={value}
       prefix={prefix}
-      ref={counter}
+      ref={handleVisibility}
       plugins={[continuous]}
       style={{
         //@ts-ignore
