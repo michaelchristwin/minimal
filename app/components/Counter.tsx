@@ -17,39 +17,50 @@ function Counter({ max, prefix, duration = 4000 }: CounterProps) {
   const [value, setValue] = useState(0);
   const counter = useRef<NumberFlowElement>(null);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const isVisible = useRef(false);
 
+  // Handle counting logic in a separate useEffect
   useEffect(() => {
-    const node = counter.current;
-    if (!node) return;
+    if (!isVisible.current) return;
+
+    // Reset value when visibility changes to true
+    setValue(0);
+
+    // Clear any running interval
+    if (intervalRef.current) clearInterval(intervalRef.current);
 
     const stepCount = 60;
     const step = Math.ceil(max / stepCount);
     const interval = duration / stepCount;
 
+    intervalRef.current = setInterval(() => {
+      setValue((prev) => {
+        const next = prev + step;
+        if (next >= max) {
+          if (intervalRef.current) clearInterval(intervalRef.current);
+          return max;
+        }
+        return next;
+      });
+    }, interval);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [duration, max, isVisible.current]);
+
+  // Handle intersection observer separately
+  useEffect(() => {
+    const node = counter.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
-        const isVisible = entry.isIntersecting;
+        isVisible.current = entry.isIntersecting;
 
-        if (isVisible) {
-          // reset value
-          setValue(0);
-
-          // clear any running interval
-          if (intervalRef.current) clearInterval(intervalRef.current);
-
-          intervalRef.current = setInterval(() => {
-            setValue((prev) => {
-              const next = prev + step;
-              if (next >= max) {
-                if (intervalRef.current) clearInterval(intervalRef.current);
-                return max;
-              }
-              return next;
-            });
-          }, interval);
-        } else {
-          // clear on exit to stop mid-animation
-          if (intervalRef.current) clearInterval(intervalRef.current);
+        if (!entry.isIntersecting && intervalRef.current) {
+          // Clear on exit to stop mid-animation
+          clearInterval(intervalRef.current);
         }
       },
       { threshold: 0.5 }
@@ -58,10 +69,9 @@ function Counter({ max, prefix, duration = 4000 }: CounterProps) {
     observer.observe(node);
 
     return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
       observer.disconnect();
     };
-  }, [duration, max]);
+  }, []);
 
   return (
     <MotionNumberFlow

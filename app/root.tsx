@@ -31,12 +31,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:site_name" content="M3tering Protocol" />
         <meta property="og:type" content="M3tering Protocol" />
-        <meta property="og:title" content="Home" />
+        <meta property="og:title" content="M3tering Protocol" />
         <meta
           property="og:description"
           content="The decentralized protocol that's driving solar energy adoption in Africa."
         />
         <meta property="og:image" content={"/images/og_image1.png"} />
+        <meta property="og:url" content="https://m3ter.ing/" />
+
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="twitter:domain" content="m3ter.ing" />
         <meta property="twitter:url" content="https://m3ter.ing/" />
