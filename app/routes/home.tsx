@@ -5,11 +5,14 @@ const Section2 = lazy(() => import("~/components/sections/Section2"));
 const MetricsSection = lazy(
   () => import("~/components/sections/MetricsSection")
 );
-const sections = [Hero, Section2, MetricsSection];
+const CompaniesSection = lazy(
+  () => import("~/components/sections/CompaniesSection")
+);
+const sections = [Hero, Section2, MetricsSection, CompaniesSection];
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "Home| M3tering Protocol" },
+    { title: "Home | M3tering Protocol" },
     { name: "description", content: "Welcome to M3tering Protocol!" },
   ];
 }
