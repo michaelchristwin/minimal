@@ -5,7 +5,7 @@ function CompaniesSection() {
   const container = useRef<HTMLDivElement>(null);
   return (
     <div
-      className="three section h-[100dvh] flex justify-center items-center px-4"
+      className="three section sm:h-[100dvh] h-fit flex justify-center items-center px-4"
       ref={container}
     >
       <div className="flex justify-center items-center w-full h-full">

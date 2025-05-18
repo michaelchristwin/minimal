@@ -10,7 +10,7 @@ import { motion } from "motion/react";
 
 function MetricsSection() {
   return (
-    <div className="two section h-[100dvh] flex justify-center items-center p-[50px]">
+    <div className="two section sm:h-[100dvh] h-fit flex justify-center items-center p-[50px]">
       <section className={`h-full w-full bg-[#faf9f6] text-black`}>
         <div className="h-full py-12">
           <div className="space-y-[50px]">

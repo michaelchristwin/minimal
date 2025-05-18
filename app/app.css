@@ -8,6 +8,7 @@ html {
   background-color: #faf9f6;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  overflow-y: scroll;
 }
 
 /* Google Fonts */

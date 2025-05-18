@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ETHCity } from "~/assets/images";
 import { motion, useScroll, useTransform } from "motion/react";
+import useIsMobile from "~/hooks/useIsMobile";
 
 const Section2 = () => {
   let wrapper = useRef<HTMLDivElement>(null);
@@ -8,15 +9,15 @@ const Section2 = () => {
     target: wrapper,
   });
   const textContainerY = useTransform(scrollYProgress, [0, 1], ["0%", "-400%"]);
-
+  const isMobile = useIsMobile();
   return (
     <div
       ref={wrapper}
       id="about"
-      className={`w-full relative p-[50px] h-[500vh] bg-[#faf9f6]`}
+      className={`w-full relative p-[50px] md:h-[500vh] h-fit bg-[#faf9f6]`}
     >
-      <div className="h-screen sticky top-[50px] sm:flex block justify-between items-center overflow-hidden">
-        <div className={`sm:w-[48%] w-full h-full bg-[#faf9f6]`}>
+      <div className="md:h-screen h-fit md:sticky relative top-[50px] sm:flex block justify-between items-center overflow-hidden">
+        <div className={`sm:w-[48%] w-full md:h-full h-fit bg-[#faf9f6]`}>
           <picture className="z-20 relative">
             {Object.entries(ETHCity.sources).map(([type, srcset], i) => (
               <source type={`image/${type}`} srcSet={srcset} key={i} />
@@ -32,8 +33,8 @@ const Section2 = () => {
         </div>
 
         <motion.div
-          className={`sm:w-[48%] w-full block h-[100vh] z-[0] relative`}
-          style={{ y: textContainerY }}
+          className={`sm:w-[48%] relative w-full block md:h-[100vh] h-fit z-0`}
+          style={{ y: !isMobile ? textContainerY : 0 }}
         >
           <div className="w-full h-[100vh] flex justify-center items-center">
             <motion.p
