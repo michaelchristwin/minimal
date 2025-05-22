@@ -17,3 +17,14 @@ export {
   AnimeBg,
   Maxwell,
 };
+
+export type CustomImage = {
+  sources: {
+    [key: string]: string; // e.g. { webp: "...srcset..." }
+  };
+  img: {
+    src: string;
+    w: number;
+    h: number;
+  };
+};
